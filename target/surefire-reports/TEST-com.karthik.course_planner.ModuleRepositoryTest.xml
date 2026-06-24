@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.karthik.course_planner.AssessmentRepositoryTest" time="3.8" tests="1" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.karthik.course_planner.ModuleRepositoryTest" time="0.021" tests="1" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -66,54 +66,11 @@
     <property name="java.class.version" value="66.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[course-planner] "/>
   </properties>
-  <testcase name="testAssessmentLinksToCorrectModule" classname="com.karthik.course_planner.AssessmentRepositoryTest" time="0.669">
-    <system-out><![CDATA[13:31:08.101 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.karthik.course_planner.AssessmentRepositoryTest]: AssessmentRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-13:31:08.193 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.AssessmentRepositoryTest
-13:31:08.260 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.karthik.course_planner.AssessmentRepositoryTest]: AssessmentRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-13:31:08.261 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.AssessmentRepositoryTest
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
-
- :: Spring Boot ::                (v4.1.0)
-
-2026-06-24T13:31:08.561+02:00  INFO 20616 --- [course-planner] [           main] c.k.c.AssessmentRepositoryTest           : Starting AssessmentRepositoryTest using Java 22.0.1 with PID 20616 (started by karth in D:\IT\git\course-planner)
-2026-06-24T13:31:08.562+02:00  INFO 20616 --- [course-planner] [           main] c.k.c.AssessmentRepositoryTest           : No active profile set, falling back to 1 default profile: "default"
-2026-06-24T13:31:08.968+02:00  INFO 20616 --- [course-planner] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-06-24T13:31:09.007+02:00  INFO 20616 --- [course-planner] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32 ms. Found 2 JPA repository interfaces.
-2026-06-24T13:31:09.261+02:00  INFO 20616 --- [course-planner] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-06-24T13:31:09.388+02:00  INFO 20616 --- [course-planner] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:7d19bb7a-35e5-4be1-a02b-ef297fb9af7d user=SA
-2026-06-24T13:31:09.389+02:00  INFO 20616 --- [course-planner] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-06-24T13:31:09.419+02:00  INFO 20616 --- [course-planner] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-06-24T13:31:09.464+02:00  INFO 20616 --- [course-planner] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
-2026-06-24T13:31:09.821+02:00  INFO 20616 --- [course-planner] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-06-24T13:31:09.891+02:00  INFO 20616 --- [course-planner] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:h2:mem:7d19bb7a-35e5-4be1-a02b-ef297fb9af7d]
-	Database driver: H2 JDBC Driver
-	Database dialect: H2Dialect
-	Database version: 2.4.240
-	Default catalog/schema: 7D19BB7A-35E5-4BE1-A02B-EF297FB9AF7D/PUBLIC
-	Autocommit mode: undefined/unknown
-	Isolation level: READ_COMMITTED [default READ_COMMITTED]
-	JDBC fetch size: 100
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-06-24T13:31:10.461+02:00  INFO 20616 --- [course-planner] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-06-24T13:31:10.495+02:00  INFO 20616 --- [course-planner] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-06-24T13:31:10.551+02:00  INFO 20616 --- [course-planner] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-06-24T13:31:10.664+02:00  WARN 20616 --- [course-planner] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-06-24T13:31:11.046+02:00  INFO 20616 --- [course-planner] [           main] c.k.c.AssessmentRepositoryTest           : Started AssessmentRepositoryTest in 2.746 seconds (process running for 3.65)
+  <testcase name="testSaveAndRetrieveModule" classname="com.karthik.course_planner.ModuleRepositoryTest" time="0.015">
+    <system-out><![CDATA[2026-06-24T13:31:11.745+02:00  INFO 20616 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.ModuleRepositoryTest]: ModuleRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-24T13:31:11.747+02:00  INFO 20616 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.ModuleRepositoryTest
+2026-06-24T13:31:11.747+02:00  INFO 20616 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.ModuleRepositoryTest]: ModuleRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-24T13:31:11.748+02:00  INFO 20616 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.ModuleRepositoryTest
 ]]></system-out>
-    <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
-WARNING: A Java agent has been loaded dynamically (C:\Users\karth\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.10\byte-buddy-agent-1.18.10.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
   </testcase>
 </testsuite>
