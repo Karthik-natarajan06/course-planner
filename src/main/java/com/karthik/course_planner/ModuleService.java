@@ -31,4 +31,28 @@ public class ModuleService {
         return totalWeightedMarks / totalWeight;
     }
 
+    public double calculateMarkNeeded(Long moduleID, double target) {
+        List<Assessment> assessments = assessmentRepository.findByModuleId(moduleID);
+
+        double totalWeight = 0;
+        double earnedPoints = 0;   
+        double remainingWeight = 0;
+
+        for (Assessment a : assessments) {
+            totalWeight += a.getWeight();
+            if (a.getMark() != null){
+                earnedPoints += a.getMark() * a.getWeight();
+            }
+            else{
+                remainingWeight += a.getWeight();
+            }
+        }
+
+        if (remainingWeight == 0) 
+            {
+            return -1;
+        }
+        return (target * totalWeight - earnedPoints) / remainingWeight;
+    }
+
 }
