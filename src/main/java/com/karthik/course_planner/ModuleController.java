@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,18 +19,23 @@ public class ModuleController {
     @Autowired
     private ModuleRepository moduleRepository;
 
+    @Autowired
+    private ModuleService moduleService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
-    public List<Module> getAllModules() {
-        return moduleRepository.findAll();
+    public List<Module> getAllModules(@RequestHeader("X-User-Id") Long userId) {
+        return moduleRepository.findByUserId(userId);
     }
 
     @PostMapping
-    public Module createModule(@RequestBody Module module) {
+    public Module createModule(@RequestHeader("X-User-Id") Long userId, @RequestBody Module module) {
+        User user = userRepository.findById(userId).orElseThrow();
+        module.setUser(user);
         return moduleRepository.save(module);
     }
-
-    @Autowired
-    private ModuleService moduleService;
 
     @GetMapping("/{moduleId}/average")
     public double getModuleAverage(@PathVariable Long moduleId) {
@@ -40,4 +46,5 @@ public class ModuleController {
     public double getMarkNeeded(@PathVariable Long moduleId, @RequestParam double target) {
         return moduleService.calculateMarkNeeded(moduleId, target);
     }
+
 }
