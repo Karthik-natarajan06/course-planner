@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.karthik.course_planner.ModuleServiceMarkNeededTest" time="0.017" tests="2" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.karthik.course_planner.AuthControllerTest" time="0.308" tests="3" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -66,12 +66,13 @@
     <property name="java.class.version" value="66.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[course-planner] "/>
   </properties>
-  <testcase name="testMarkNeededWithNoRemainingWeight" classname="com.karthik.course_planner.ModuleServiceMarkNeededTest" time="0.005">
-    <system-out><![CDATA[2026-06-25T13:37:14.980+02:00  INFO 28324 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.ModuleServiceMarkNeededTest]: ModuleServiceMarkNeededTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-06-25T13:37:14.981+02:00  INFO 28324 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.ModuleServiceMarkNeededTest
-2026-06-25T13:37:14.982+02:00  INFO 28324 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.ModuleServiceMarkNeededTest]: ModuleServiceMarkNeededTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-06-25T13:37:14.982+02:00  INFO 28324 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.ModuleServiceMarkNeededTest
+  <testcase name="testLoginFailsWithWrongPassword" classname="com.karthik.course_planner.AuthControllerTest" time="0.126">
+    <system-out><![CDATA[2026-06-25T13:37:14.640+02:00  INFO 28324 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-25T13:37:14.641+02:00  INFO 28324 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.AuthControllerTest
+2026-06-25T13:37:14.641+02:00  INFO 28324 --- [course-planner] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.karthik.course_planner.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-25T13:37:14.643+02:00  INFO 28324 --- [course-planner] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.karthik.course_planner.CoursePlannerApplication for test class com.karthik.course_planner.AuthControllerTest
 ]]></system-out>
   </testcase>
-  <testcase name="testMarkNeededWithRemainingWeight" classname="com.karthik.course_planner.ModuleServiceMarkNeededTest" time="0.006"/>
+  <testcase name="testLoginSucceedsWithCorrectPassword" classname="com.karthik.course_planner.AuthControllerTest" time="0.114"/>
+  <testcase name="testPasswordIsHashedNotStoredAsPlainText" classname="com.karthik.course_planner.AuthControllerTest" time="0.058"/>
 </testsuite>
