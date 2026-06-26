@@ -1,6 +1,7 @@
 package com.karthik.course_planner;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,15 +27,17 @@ public class ModuleController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<Module> getAllModules(@RequestHeader("X-User-Id") Long userId) {
-        return moduleRepository.findByUserId(userId);
+    public List<ModuleDto> getAllModules(@RequestHeader("X-User-Id") Long userId) {
+        List<Module> modules = moduleRepository.findByUserId(userId);
+        return modules.stream().map(ModuleDto::new).collect(Collectors.toList());
     }
 
     @PostMapping
-    public Module createModule(@RequestHeader("X-User-Id") Long userId, @RequestBody Module module) {
+    public ModuleDto createModule(@RequestHeader("X-User-Id") Long userId, @RequestBody Module module) {
         User user = userRepository.findById(userId).orElseThrow();
         module.setUser(user);
-        return moduleRepository.save(module);
+        Module saved = moduleRepository.save(module);
+        return new ModuleDto(saved);
     }
 
     @GetMapping("/{moduleId}/average")
