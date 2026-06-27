@@ -1,6 +1,7 @@
 package com.karthik.course_planner;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,17 @@ public class AssessmentController {
     private ModuleRepository moduleRepository;
 
     @GetMapping
-    public List<Assessment> getAssessmentsForModule(@PathVariable Long moduleId) {
-        return assessmentRepository.findByModuleId(moduleId);
+    public List<AssessmentDto> getAssessmentsForModule(@PathVariable Long moduleId) {
+        List<Assessment> assessments = assessmentRepository.findByModuleId(moduleId);
+        return assessments.stream().map(AssessmentDto::new).collect(Collectors.toList());
     }
 
     @PostMapping
-    public Assessment createAssessment(@PathVariable Long moduleId, @RequestBody Assessment assessment) {
+    public AssessmentDto createAssessment(@PathVariable Long moduleId, @RequestBody Assessment assessment) {
         Module module = moduleRepository.findById(moduleId).orElseThrow();
         assessment.setModule(module);
-        return assessmentRepository.save(assessment);
+        Assessment saved = assessmentRepository.save(assessment);
+        return new AssessmentDto(saved);
     }
 
 }
