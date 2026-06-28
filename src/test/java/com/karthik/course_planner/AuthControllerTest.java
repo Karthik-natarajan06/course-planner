@@ -1,11 +1,13 @@
 package com.karthik.course_planner;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -36,9 +38,10 @@ public class AuthControllerTest {
         loginAttempt.setUsername("alice");
         loginAttempt.setPassword("mypassword");
 
-        String result = authController.login(loginAttempt);
+        String token = authController.login(loginAttempt);
 
-        assertEquals("Login successful", result);
+        assertNotNull(token);
+        assertTrue(token.split("\\.").length == 3);
     }
 
     @Test
@@ -52,9 +55,7 @@ public class AuthControllerTest {
         loginAttempt.setUsername("bob");
         loginAttempt.setPassword("wrongpassword");
 
-        String result = authController.login(loginAttempt);
-
-        assertEquals("Invalid credentials", result);
+        assertThrows(UnauthorizedException.class, () -> authController.login(loginAttempt));
     }
 
 }
