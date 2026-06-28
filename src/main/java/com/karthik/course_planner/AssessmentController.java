@@ -26,7 +26,7 @@ public class AssessmentController {
     public List<AssessmentDto> getAssessmentsForModule(@PathVariable Long moduleId, @RequestHeader("X-User-Id") Long userId) {
         Module module = moduleRepository.findById(moduleId).orElseThrow();
         if (!module.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Not authorized to view this module's assessments");
+            throw new UnauthorizedException("Not authorized to view this module's assessments");
         }
         List<Assessment> assessments = assessmentRepository.findByModuleId(moduleId);
         return assessments.stream().map(AssessmentDto::new).collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class AssessmentController {
     public AssessmentDto createAssessment(@PathVariable Long moduleId, @RequestHeader("X-User-Id") Long userId, @RequestBody Assessment assessment) {
         Module module = moduleRepository.findById(moduleId).orElseThrow();
         if (!module.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Not authorized to add assessments to this module");
+            throw new UnauthorizedException("Not authorized to add assessment to this module");
         }
         assessment.setModule(module);
         Assessment saved = assessmentRepository.save(assessment);
