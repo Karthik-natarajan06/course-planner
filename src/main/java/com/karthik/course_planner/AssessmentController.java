@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/modules/{moduleId}/assessments")
@@ -23,7 +24,8 @@ public class AssessmentController {
     private ModuleRepository moduleRepository;
 
     @GetMapping
-    public List<AssessmentDto> getAssessmentsForModule(@PathVariable Long moduleId, @RequestHeader("X-User-Id") Long userId) {
+    public List<AssessmentDto> getAssessmentsForModule(@PathVariable Long moduleId, HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
         Module module = moduleRepository.findById(moduleId).orElseThrow();
         if (!module.getUser().getId().equals(userId)) {
             throw new UnauthorizedException("Not authorized to view this module's assessments");
@@ -33,10 +35,11 @@ public class AssessmentController {
     }
 
     @PostMapping
-    public AssessmentDto createAssessment(@PathVariable Long moduleId, @RequestHeader("X-User-Id") Long userId, @RequestBody Assessment assessment) {
+    public AssessmentDto createAssessment(@PathVariable Long moduleId, HttpServletRequest request, @RequestBody Assessment assessment) {
+        Long userId = (Long) request.getAttribute("userId");
         Module module = moduleRepository.findById(moduleId).orElseThrow();
         if (!module.getUser().getId().equals(userId)) {
-            throw new UnauthorizedException("Not authorized to add assessment to this module");
+            throw new UnauthorizedException("Not authorized to add assessments to this module");
         }
         assessment.setModule(module);
         Assessment saved = assessmentRepository.save(assessment);
