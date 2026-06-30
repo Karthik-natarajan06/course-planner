@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Planner</title>
+    <style>
+        body { font-family: sans-serif; max-width: 400px; margin: 40px auto; }
+        input, button { display: block; width: 100%; margin: 8px 0; padding: 8px; }
+        #message { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Course Planner</h1>
+
+    <h2>Register</h2>
+    <input type="text" id="registerUsername" placeholder="Username">
+    <input type="password" id="registerPassword" placeholder="Password">
+    <button onclick="register()">Register</button>
+
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+
+    <script>
+        function register() {
+            const username = document.getElementById("registerUsername").value;
+            const password = document.getElementById("registerPassword").value;
+
+            fetch("/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").innerText = "Registered! You can now log in.";
+            })
+            .catch(error => {
+                document.getElementById("message").innerText = "Registration failed.";
+            });
+        }
+
+        function login() {
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+
+            fetch("/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Login failed");
+                }
+                return response.text();
+            })
+            .then(token => {
+                localStorage.setItem("token", token);
+                window.location.href = "/dashboard.html";
+            })
+            .catch(error => {
+                document.getElementById("message").innerText = "Invalid username or password.";
+            });
+        }
+    </script>
+</body>
+</html>
