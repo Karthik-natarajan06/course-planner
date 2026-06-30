@@ -43,15 +43,37 @@
                 modules.forEach(module => {
                     const div = document.createElement("div");
                     div.className = "module";
-                    div.innerText = `${module.name} (${module.category}, ${module.creditWeight} credits)`;
+
+                    const header = document.createElement("div");
+                    header.innerText = `${module.name} (${module.category}, ${module.creditWeight} credits)`;
+                    header.style.cursor = "pointer";
+                    header.style.fontWeight = "bold";
+                    div.appendChild(header);
+
+                    const averageText = document.createElement("span");
+                    div.appendChild(averageText);
 
                     fetch(`/modules/${module.id}/average`, {
                         headers: { "Authorization": "Bearer " + token }
                     })
                     .then(response => response.json())
                     .then(average => {
-                        div.innerText += ` - Average: ${average.toFixed(1)}%`;
+                        averageText.innerText = ` - Average: ${average.toFixed(1)}%`;
                     });
+
+                    const assessmentsDiv = document.createElement("div");
+                    assessmentsDiv.style.display = "none";
+                    assessmentsDiv.style.marginTop = "10px";
+                    div.appendChild(assessmentsDiv);
+
+                    header.onclick = function() {
+                        if (assessmentsDiv.style.display === "none") {
+                            loadAssessments(module.id, assessmentsDiv);
+                            assessmentsDiv.style.display = "block";
+                        } else {
+                            assessmentsDiv.style.display = "none";
+                        }
+                    };
 
                     list.appendChild(div);
                 });
@@ -78,6 +100,55 @@
         }
 
         loadModules();
+
+        function loadAssessments(moduleId, container) {
+            fetch(`/modules/${moduleId}/assessments`, {
+                headers: { "Authorization": "Bearer " + token }
+            })
+            .then(response => response.json())
+            .then(assessments => {
+                container.innerHTML = "";
+
+                assessments.forEach(assessment => {
+                    const p = document.createElement("p");
+                    const markText = assessment.mark === null ? "not marked" : assessment.mark + "%";
+                    p.innerText = `${assessment.name} - weight: ${assessment.weight}%, mark: ${markText}`;
+                    container.appendChild(p);
+                });
+
+                const nameInput = document.createElement("input");
+                nameInput.placeholder = "Assessment name";
+
+                const weightInput = document.createElement("input");
+                weightInput.type = "number";
+                weightInput.placeholder = "Weight";
+
+                const addButton = document.createElement("button");
+                addButton.innerText = "Add Assessment";
+                addButton.onclick = function() {
+                    createAssessment(moduleId, nameInput.value, parseFloat(weightInput.value), container);
+                };
+
+                container.appendChild(nameInput);
+                container.appendChild(weightInput);
+                container.appendChild(addButton);
+            });
+        }
+
+        function createAssessment(moduleId, name, weight, container) {
+            fetch(`/modules/${moduleId}/assessments`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ name, weight })
+            })
+            .then(response => response.json())
+            .then(() => {
+                loadAssessments(moduleId, container);
+            });
+        }
     </script>
 </body>
 </html>
