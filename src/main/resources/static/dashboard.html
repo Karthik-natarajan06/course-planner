@@ -44,6 +44,15 @@
                     const div = document.createElement("div");
                     div.className = "module";
                     div.innerText = `${module.name} (${module.category}, ${module.creditWeight} credits)`;
+
+                    fetch(`/modules/${module.id}/average`, {
+                        headers: { "Authorization": "Bearer " + token }
+                    })
+                    .then(response => response.json())
+                    .then(average => {
+                        div.innerText += ` - Average: ${average.toFixed(1)}%`;
+                    });
+
                     list.appendChild(div);
                 });
             });
