@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,20 @@ public class AssessmentController {
             throw new UnauthorizedException("Not authorized to add assessments to this module");
         }
         assessment.setModule(module);
+        Assessment saved = assessmentRepository.save(assessment);
+        return new AssessmentDto(saved);
+    }
+
+    @PatchMapping("/{assessmentId}")
+    public AssessmentDto updateMark(@PathVariable Long moduleId, @PathVariable Long assessmentId, HttpServletRequest request, @RequestBody Assessment markUpdate) {
+        Long userId = (Long) request.getAttribute("userId");
+        Module module = moduleRepository.findById(moduleId).orElseThrow();
+        if (!module.getUser().getId().equals(userId)) {
+            throw new UnauthorizedException("Not authorized to update this module's assessments");
+        }
+
+        Assessment assessment = assessmentRepository.findById(assessmentId).orElseThrow();
+        assessment.setMark(markUpdate.getMark());
         Assessment saved = assessmentRepository.save(assessment);
         return new AssessmentDto(saved);
     }

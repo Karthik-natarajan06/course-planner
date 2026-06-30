@@ -112,7 +112,24 @@
                 assessments.forEach(assessment => {
                     const p = document.createElement("p");
                     const markText = assessment.mark === null ? "not marked" : assessment.mark + "%";
-                    p.innerText = `${assessment.name} - weight: ${assessment.weight}%, mark: ${markText}`;
+                    p.innerText = `${assessment.name} - weight: ${assessment.weight}%, mark: ${markText} `;
+
+                    const markInput = document.createElement("input");
+                    markInput.type = "number";
+                    markInput.placeholder = "Set mark";
+                    markInput.style.width = "80px";
+                    markInput.style.display = "inline-block";
+
+                    const setMarkButton = document.createElement("button");
+                    setMarkButton.innerText = "Set";
+                    setMarkButton.style.display = "inline-block";
+                    setMarkButton.style.width = "auto";
+                    setMarkButton.onclick = function() {
+                        setMark(moduleId, assessment.id, parseFloat(markInput.value), container);
+                    };
+
+                    p.appendChild(markInput);
+                    p.appendChild(setMarkButton);
                     container.appendChild(p);
                 });
 
@@ -147,6 +164,22 @@
             .then(response => response.json())
             .then(() => {
                 loadAssessments(moduleId, container);
+            });
+        }
+
+        function setMark(moduleId, assessmentId, mark, container) {
+            fetch(`/modules/${moduleId}/assessments/${assessmentId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ mark })
+            })
+            .then(response => response.json())
+            .then(() => {
+                loadAssessments(moduleId, container);
+                loadModules();
             });
         }
     </script>
